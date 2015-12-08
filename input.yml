@@ -1,8 +1,13 @@
 ---
+# define here the global options:
+# - output directory
+# - "no clobber" - not implemented
 global_options:
     no_clobber: True
     output_dir: "D:\\git\\ImageChallenge\\test"
-    
+
+# define the image sets here below
+# each set will be stored in a separate subdirectory, named after the set    
 image_sets:
     - Set1:
         url:    https://www.dropbox.com/s/jcdd5uvpv5aw0dl/challenge1.html?dl=1

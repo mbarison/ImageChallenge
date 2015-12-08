@@ -1,22 +1,18 @@
 #!/usr/bin/env Python
-#################################
+##################################################################
 # ImageChallenge.py
 # 2015/12/06 Marcello Barisonzi
 # Apply arbitrary filters to online image collections.
-#################################
+# Usage: ImageChallenge.py <input_file>
+##################################################################
 
 #import argparse
-import sys, os, shutil, yaml
+import sys, os, yaml
 from DropboxSpider import DropboxSpider
 from ImageManipulator import ImageManipulator
 
-class ImageChallenge(object):
-    def __init__(self):
-        return
 
 def main():
-    ### parse options
-    #parser = argparse.ArgumentParser(description='Apply arbitrary filters to online image collections.')
     if len(sys.argv) != 2:
         print("\nUsage: %s <input_file>" % __file__)
         sys.exit(666)
@@ -32,8 +28,13 @@ def main():
     
     # create target directories if not existing
     out_dir = options_dict["global_options"]["output_dir"]
+    
     if not os.path.isdir(out_dir):
-        os.mkdir(out_dir)
+        try:
+            os.mkdir(out_dir)
+        except:
+            print("ERROR! Cannot create output directory:", out_dir)
+            sys.exit(666) 
         
     ### collect images into target directory
     for imageSetDict in options_dict["image_sets"]:
@@ -41,25 +42,30 @@ def main():
         print("Processing set: %s" % set_name)
         
         # create set directories
-        sub_dir = os.path.join(out_dir, set_name)
-        if not os.path.isdir(sub_dir):
-            os.mkdir(os.path.join(sub_dir))
+        try:
+            sub_dir = os.path.join(out_dir, set_name)
+            if not os.path.isdir(sub_dir):
+                os.mkdir(os.path.join(sub_dir))
+                
+            orig_dir = os.path.join(sub_dir, "original")
+            proc_dir = os.path.join(sub_dir, "processed")
             
-        orig_dir = os.path.join(sub_dir, "original")
-        proc_dir = os.path.join(sub_dir, "processed")
-        
-        if not os.path.isdir(orig_dir):
-            os.mkdir(orig_dir)
-        if not os.path.isdir(proc_dir):
-            os.mkdir(proc_dir)
+            if not os.path.isdir(orig_dir):
+                os.mkdir(orig_dir)
+            if not os.path.isdir(proc_dir):
+                os.mkdir(proc_dir)
+        except:
+            print("ERROR! Could not create a subdirectory in", out_dir)
+            sys.exit(666)
             
+        # download the directories
         spider = DropboxSpider()
         spider.set_input_url(imageSetDict[set_name]["url"])
         spider.set_output_dir(orig_dir)
         
-        #if not spider.get_files():
-        #    print("No files were downloaded, skipping %s" % set_name)
-        #    continue
+        if not spider.get_files():
+            print("No files were downloaded, skipping %s" % set_name)
+            continue
         
         ### pass images to manipulator
         manipulator = ImageManipulator()
