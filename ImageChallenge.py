@@ -57,12 +57,16 @@ def main():
         spider.set_input_url(imageSetDict[set_name]["url"])
         spider.set_output_dir(orig_dir)
         
-        if not spider.get_files():
-            print("No files were downloaded, skipping %s" % set_name)
-            continue
+        #if not spider.get_files():
+        #    print("No files were downloaded, skipping %s" % set_name)
+        #    continue
         
         ### pass images to manipulator
-        
+        manipulator = ImageManipulator()
+        manipulator.set_input_dir(orig_dir)
+        manipulator.set_output_dir(proc_dir)      
+        manipulator.set_filters(imageSetDict[set_name]["filters"])
+        manipulator.process_images()
     
     return
 

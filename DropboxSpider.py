@@ -130,7 +130,7 @@ class DropboxSpider(object):
         
         logF = codecs.open(os.path.join(self.__output_dir, "log.txt"),"w","utf-8")
         logF.write("== Log ==\n")
-        logF.write("Downloaded %d files out of %d\n" % (fTot-len(self._missing_urls), fTot))
+        logF.write("Downloaded %d files out of %d in %d seconds.\n" % (fTot-len(self._missing_urls), fTot, (t0-t1)))
         logF.write("Missing URLs:\n")
         for i in sorted(self._missing_urls):
             logF.write("%s\n" % i)
