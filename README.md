@@ -22,11 +22,11 @@ Our idea was to isolate the image filtering and processing into a separate libra
 + The main file is ImageChallenge.py . It needs an input YAML file to run. The YAML file input.yml is given as example. The configuration file contains the necessary parameters to run the program. The file is self-documenting.
 + The program is invoked like this: 
 > python ImageChallenge.py input.yml
-+ The program first creates the output directory, if it does not exist. Inside this directory, it creates three subdirectories: <set_name>/, <set_name>/original and <set_name>/processed.
++ The program first creates the output directory, if it does not exist. Inside this directory, it creates three subdirectories: &lt;set_name&gt;/, &lt;set_name&gt;/original and &lt;set_name&gt;/processed.
 + For each set, the main program creates an instance of the DropboxSpider class.
-+ The DropboxSpider class downloads the list of files, parses the HTML and downloads each file in the <set_name>/original directory. A log.txt file is also created in the same directory to keep track of missing files.
++ The DropboxSpider class downloads the list of files, parses the HTML and downloads each file in the &lt;set_name&gt;/original directory. A log.txt file is also created in the same directory to keep track of missing files.
 + After the download is complete, the main program creates one instance of the ImageManipulator class.
-+ The ImageManipulator looks for all the image files in the <set_name>/original directory, applies the filters and writes the output into <set_name>/processed. Filters are taken from the Python Image Library. If a filter does not match to the list of known filters it is discarded. A log.txt file is also created in the same directory to keep track of images that could not be processed.
++ The ImageManipulator looks for all the image files in the &lt;set_name&gt;/original directory, applies the filters and writes the output into &lt;set_name&gt;/processed. Filters are taken from the Python Image Library. If a filter does not match to the list of known filters it is discarded. A log.txt file is also created in the same directory to keep track of images that could not be processed.
 
 
 ## Caveats
@@ -40,10 +40,17 @@ Our idea was to isolate the image filtering and processing into a separate libra
 
 ## The ImageManipulator class API
   ImageManipulator() : create an instance
-  ImageManipulator.set_input_dir(<str>)  : set the name of the input directory
-  ImageManipulator.set_output_dir(<str>) : set the name of the output directory
-  ImageManipulator.set_filters(<list>)   : set list of filters (needs to be a list as input)
-  ImageManipulator.add_filter(<str>)     : add single filter (needs to be a string as input)
+  
+  ImageManipulator.set_input_dir(&lt;str&gt;)  : set the name of the input directory
+  
+  ImageManipulator.set_output_dir(&lt;str&gt;) : set the name of the output directory
+  
+  ImageManipulator.set_filters(&lt;list&gt;)   : set list of filters (needs to be a list as input)
+  
+  ImageManipulator.add_filter(&lt;str&gt;)     : add single filter (needs to be a string as input)
+  
   ImageManipulator.get_filters()         : returns list of filters
+  
   ImageManipulator.clear_filters()       : remove all filters from list
+  
   ImageManipulator.process_images()      : start processing the images
