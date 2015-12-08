@@ -120,7 +120,7 @@ class DropboxSpider(object):
         
         # check that the output directory exists
         if not os.path.isdir(self.__output_dir):
-            print("ImageManipulator.process_images() : Output/Input directories do not exist.")
+            print("DropboxSpider.get_files() : Output/Input directories do not exist.")
             return False
         
         isOK = True

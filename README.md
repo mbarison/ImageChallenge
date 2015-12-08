@@ -20,8 +20,7 @@ Our idea was to isolate the image filtering and processing into a separate libra
 ## Description
 
 + The main file is ImageChallenge.py . It needs an input YAML file to run. The YAML file input.yml is given as example. The configuration file contains the necessary parameters to run the program. The file is self-documenting.
-+ The program is invoked like this: 
-> python ImageChallenge.py input.yml
++ The program is invoked like this: python ImageChallenge.py input.yml
 + The program first creates the output directory, if it does not exist. Inside this directory, it creates three subdirectories: &lt;set_name&gt;/, &lt;set_name&gt;/original and &lt;set_name&gt;/processed.
 + For each set, the main program creates an instance of the DropboxSpider class.
 + The DropboxSpider class downloads the list of files, parses the HTML and downloads each file in the &lt;set_name&gt;/original directory. A log.txt file is also created in the same directory to keep track of missing files.
@@ -34,23 +33,22 @@ Our idea was to isolate the image filtering and processing into a separate libra
 + Many links are broken, the program ignores them and writes them in the log file.
 + For brevity, all files are downloaded with the .jpg extension (even when they are not). This does not seem to be a problem for PIL, execpt in a few cases where I think the URL links to an HTML file.
 + All output files are PNG files. PIL does not write grayscale images to JPEG. I could convert back to RGB, but I don't know if this is in the scope of the exercise ;)
-+ There are some URLs which use Chinese characters. So, if you want to use this program in Windows, you need to have Unicode set up in your shell using the command here below. I haven't tested it with Linux or Mac.
-> CHCP 65001
++ There are some URLs which use Chinese characters. So, if you want to use this program in Windows, you need to have Unicode set up in your shell using the command "CHCP 65001". I haven't tested it with Linux or Mac.
 
 
 ## The ImageManipulator class API
-  ImageManipulator() : create an instance
+    ImageManipulator() : create an instance
   
-  ImageManipulator.set_input_dir(&lt;str&gt;)  : set the name of the input directory
+    ImageManipulator.set_input_dir(<str>)  : set the name of the input directory
   
-  ImageManipulator.set_output_dir(&lt;str&gt;) : set the name of the output directory
+    ImageManipulator.set_output_dir(<str>) : set the name of the output directory
   
-  ImageManipulator.set_filters(&lt;list&gt;)   : set list of filters (needs to be a list as input)
+    ImageManipulator.set_filters(<list>)   : set list of filters (needs to be a list as input)
   
-  ImageManipulator.add_filter(&lt;str&gt;)     : add single filter (needs to be a string as input)
+    ImageManipulator.add_filter(<str>)     : add single filter (needs to be a string as input)
   
-  ImageManipulator.get_filters()         : returns list of filters
+    ImageManipulator.get_filters()         : returns list of filters
   
-  ImageManipulator.clear_filters()       : remove all filters from list
+    ImageManipulator.clear_filters()       : remove all filters from list
   
-  ImageManipulator.process_images()      : start processing the images
+    ImageManipulator.process_images()      : start processing the images
